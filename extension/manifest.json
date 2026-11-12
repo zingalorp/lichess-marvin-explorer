@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "Marvin Opening Explorer",
+  "version": "0.2.1",
+  "description": "Add a Marvin tab with local policy and WDL predictions to the Lichess opening explorer.",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyX4NpIlxj/TfBNDaIof2qZBPOS3DVGZWQoIRPXxe95Nn623X9x71i0x5YZt1LfrY12+rCksVTFLgJv3Q2hp3HQImLvXfHo2uaKLRsHXgpHu4iskJ/zLN9VO8G+0uy7+Zo2zsEeOaZ8lE7LSjh06oRLMq6RgQAlhjO5kYWo16/qUqkvX65MPGOFRlEozJpgjRrhBQrPlPGX/+UHUJ2/plVXetulCfhVUxRQ7SLMtRcWFgeHqLE4+2voavMRxgRT+KE4QGeSKCRbf25rj2cxr+VYTwyaEG79cAG60NToIe5gGzc86u7QEo7AnqjhHHFfUdexhP06U3/f9VZqW3gpZJ1wIDAQAB",
+  "permissions": [
+    "storage",
+    "nativeMessaging"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Marvin Explorer settings",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://lichess.org/*"
+      ],
+      "js": [
+        "page.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://lichess.org/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "explorer.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

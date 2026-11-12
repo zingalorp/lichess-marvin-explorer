@@ -1,0 +1,62 @@
+/* Native moves, bar, sum and explorer__config classes inherit Lichess's theme. */
+/* A missing native opening must not reduce the independent Marvin panel. */
+.analyse .analyse__tools .explorer-box.me-native-hidden { flex: 3 1 0; }
+.explorer-box.me-native-hidden > :not(.me-root) { display: none !important; }
+.explorer-box.me-has-tabs .explorer-title:not(.me-tabs) { display: none !important; }
+.explorer-box .me-root { width: 100%; font: inherit; color: inherit; }
+.me-root [hidden], .me-root[hidden] { display: none !important; }
+.explorer-box .me-root .me-tabs { padding-inline-end: 1.8em; }
+.me-root .me-tabs .me-tab { white-space: nowrap; }
+.me-root .me-tabs .me-tab.active { color: var(--c-font-clear); }
+.me-root .me-tabs .me-tab:not(.active) strong { font-weight: inherit; }
+.me-root .me-moves { width: 100%; border-collapse: collapse; }
+.me-root .me-move { padding: 0; border: 0; background: none; color: inherit; font: inherit; line-height: inherit; cursor: pointer; }
+.me-root .me-probability { padding-inline-end: 7px; }
+.explorer-box .me-root .me-moves:not(.me-time-disabled) .me-probability { padding-inline: 0; text-align: right; }
+.explorer-box .me-root .me-moves:not(.me-time-disabled) .sum .me-probability { padding-inline-end: 7px; }
+.explorer-box .me-root .me-moves .me-time-cell { width: 46px; padding: 0; text-align: center; }
+.explorer-box .me-root .me-moves td:last-child { padding-inline-start: 0; }
+
+
+/* Four native columns: move, policy, time target, and WDL. */
+.explorer-box .me-root .me-moves td:last-child { font-size: inherit; text-align: start; }
+.explorer-box .me-root .choices { display: grid; grid-template-columns: repeat(7, 1fr); }
+.me-root .speed .choices { grid-template-columns: repeat(6, 1fr); }
+.me-root .choices button { min-width: 0; }
+.me-root .choices button:nth-child(7n) { border-right-width: 1px; }
+.me-root .speed .choices button:nth-child(6n) { border-right-width: 1px; }
+.me-root .rating .choices button:nth-child(7n+1), .me-root .speed .choices button:nth-child(6n+1) { border-radius: var(---ui-roundness,7px) 0 0 var(---ui-roundness,7px); }
+.me-root .rating .choices button:nth-child(7n), .me-root .speed .choices button:nth-child(6n) { border-radius: 0 var(---ui-roundness,7px) var(---ui-roundness,7px) 0; }
+.me-root .me-more { display: block; width: 100%; padding: 4px; text-align: center; font-size: 20px; line-height: 20px; }
+.me-root .me-loading { display: flex; justify-content: center; padding: 24px; }
+.me-root .me-error, .me-root .me-terminal { padding: 12px; white-space: normal; }
+.me-root .me-error { color: var(--c-bad); }
+.me-root .me-retry { margin: 0 12px 12px; padding: 7px 16px; }
+.me-root button:focus-visible { outline: 2px solid var(--c-primary); outline-offset: -2px; }
+@media (max-width: 400px) { .me-root .me-tabs { font-size: .75rem; } }
+
+/* Timing has its own small target; policy and WDL retain native title hovers. */
+.me-root .me-probability { white-space: nowrap; }
+.me-root .me-time-trigger { display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; width: 46px; height: 24px; margin: -2px 0; padding: 0; background: none; border: 0; color: inherit; opacity: .55; cursor: pointer; }
+.me-root .me-time-trigger:hover, .me-root .me-time-trigger:focus-visible, .me-root .me-time-trigger[aria-expanded="true"] { opacity: 1; }
+.me-root .me-time-value { font: 11px/1.4 "Noto Sans", sans-serif; font-variant-numeric: tabular-nums; opacity: .8; }
+.me-root .me-clock-face { position: relative; display: block; width: 12px; height: 12px; border: 1px solid currentColor; border-radius: 50%; }
+.me-root .me-clock-face::before { content: ""; position: absolute; left: 4px; top: 2px; width: 1px; height: 4px; background: currentColor; }
+.me-root .me-clock-face::after { content: ""; position: absolute; left: 4px; top: 5px; width: 4px; height: 1px; background: currentColor; }
+.me-time-popup { position: fixed; z-index: 10000; box-sizing: border-box; width: 264px; max-width: calc(100vw - 16px); padding: 9px 10px 8px; border-radius: 3px; background: var(--c-bg-box); color: var(--c-font); box-shadow: 0 2px 8px #0004; font: 12px/1.4 "Noto Sans", sans-serif; font-variant-numeric: tabular-nums; }
+.me-time-popup[hidden] { display: none !important; }
+.me-time-chart { display: grid; gap: 1px; align-items: end; height: 42px; overflow: hidden; }
+.me-time-chart i { display: block; background: var(--c-good); }
+.me-time-stats { display: flex; justify-content: space-between; gap: 8px; white-space: nowrap; }
+/* Log time axis: tick labels sit at their position; the first and last are kept inside. */
+.me-time-axis { position: relative; height: 18px; padding-top: 3px; font-size: 11px; color: var(--c-font-dim); }
+.me-time-axis span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.me-time-axis span:first-child { transform: none; }
+.me-time-axis span:last-child { transform: translateX(-100%); }
+.me-time-stats { margin-top: 6px; }
+@media (pointer: coarse) { .me-root .me-time-trigger { width: 46px; height: 32px; margin-block: -6px; opacity: .8; } }
+
+/* WDL not evaluated yet: the row's policy is already final. */
+.me-root .bar.me-wdl-pending { opacity: .4; animation: me-wdl-pulse 1.2s ease-in-out infinite alternate; }
+@keyframes me-wdl-pulse { from { opacity: .25; } to { opacity: .5; } }
+@media (prefers-reduced-motion: reduce) { .me-root .bar.me-wdl-pending { animation: none; } }

@@ -1,0 +1,7 @@
+# Exact versions used by the Windows CPU bundle.
+chess==1.11.2
+numpy==2.4.1
+onnxruntime==1.27.0
+flatbuffers==25.12.19
+packaging==26.3
+protobuf==7.36.2

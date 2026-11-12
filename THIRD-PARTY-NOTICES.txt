@@ -1,0 +1,30 @@
+This bundle includes application-local copies of the following components.
+Their original license files and distribution metadata are included.
+
+Python 3.13.15
+  https://www.python.org/downloads/release/python-31315/
+  License: runtime/LICENSE.txt (Python Software Foundation and bundled notices).
+
+chess 1.11.2
+  https://pypi.org/project/chess/1.11.2/
+  License: GNU GPL version 3 or later.
+  The complete Python source and license are under runtime/Lib/site-packages.
+
+NumPy 2.4.1
+  https://pypi.org/project/numpy/2.4.1/
+  License and bundled native-library notices: numpy-2.4.1.dist-info/licenses.
+
+ONNX Runtime 1.27.0 (CPU)
+  https://pypi.org/project/onnxruntime/1.27.0/
+  License and third-party notices: runtime/Lib/site-packages/onnxruntime/LICENSE
+  and runtime/Lib/site-packages/onnxruntime/ThirdPartyNotices.txt.
+
+FlatBuffers 25.12.19, packaging 26.3 and protobuf 7.36.2
+  https://pypi.org/project/flatbuffers/25.12.19/
+  https://pypi.org/project/packaging/26.3/
+  https://pypi.org/project/protobuf/7.36.2/
+  License files are in their corresponding .dist-info directories.
+
+The browser extension and native host source are included in extension/ and
+host/. The Marvin ONNX weights and anonymous temporal profile are included.
+No Lichess login details, browser profile or game/player records are bundled.

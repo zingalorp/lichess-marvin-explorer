@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Marvin settings</title><link rel="stylesheet" href="popup.css"><script src="popup.js" defer></script></head>
+<body>
+  <h1>Marvin</h1>
+  <form id="display-settings">
+    <label class="field" for="model">Model<select id="model"><option value="79m">79M (default)</option><option value="23m">23M (faster)</option></select></label>
+    <label class="toggle">Include resignation<input id="includeResignation" type="checkbox"></label>
+    <label class="toggle">Show move time<input id="showMoveTime" type="checkbox"></label>
+    <div id="timing-options">
+      <label class="field" for="timeStatistic">Time display<select id="timeStatistic"><option value="mode">Mode</option><option value="typical">Typical</option><option value="mean">Mean</option></select></label>
+    </div>
+  </form>
+  <p id="save-error" role="alert" hidden></p>
+  <a href="https://lichess.org/analysis#explorer/lichess" target="_blank" rel="noreferrer">Open analysis board ↗</a>
+</body>
+</html>

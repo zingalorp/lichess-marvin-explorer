@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.venv/
+weights/
+host-config.json
+host/run_host.cmd
+com.marvin.lichess_explorer.json
+test-results/
+*.log
+runtime/
+dist/
+.pytest_cache/
+# Local development notes
+docs/validation.md
+docs/temporal-audit.json
