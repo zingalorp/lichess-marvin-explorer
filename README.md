@@ -19,37 +19,36 @@ native messaging.
 
 ## Install (Windows)
 
-1. Install Python 3.11+ and the dependencies:
-
-   ```powershell
-   python -m pip install -r host\requirements.txt
-   ```
-
-   For an NVIDIA GPU, install `onnxruntime-gpu` instead of `onnxruntime`.
-
-2. Download `marvin_79m.onnx`, `marvin_23m.onnx` and their `.offset.npz` files
-   from [holymolyyy/marvin-onnx](https://huggingface.co/holymolyyy/marvin-onnx)
-   into a `weights` folder in this project.
-
-3. Register the local model host for Chrome and Edge:
-
-   ```powershell
-   .\install.ps1
-   ```
-
-4. Open `chrome://extensions` (or `edge://extensions`), turn on **Developer
-   mode**, click **Load unpacked** and select the `extension` folder.
-
-5. Open an [analysis board](https://lichess.org/analysis), open the opening
-   explorer (book button) and select the **Marvin** tab.
+1. Download the latest `Marvin-Opening-Explorer-…-Windows.zip` from
+   [Releases](https://github.com/zingalorp/lichess-marvin-explorer/releases/latest).
+   It includes everything: no Python or other downloads needed.
+2. Right-click the ZIP, choose **Extract All**, and keep the folder somewhere
+   permanent (such as Documents).
+3. Double-click **Setup.cmd** and follow the steps it shows. It opens your
+   browser's extensions page, where you turn on **Developer mode**, click
+   **Load unpacked** and choose the `extension` folder (its path is already
+   copied for you).
+4. Open an [analysis board](https://lichess.org/analysis), click the book button
+   and choose the **Marvin** tab.
 
 The toolbar icon chooses the model (79M or the faster 23M) and display options.
-To remove the host, run `.\install.ps1 -Uninstall`, then remove the extension
-in the browser.
+To remove it, double-click **Uninstall.cmd** and remove the extension in the
+browser. `START-HERE.txt` in the ZIP has troubleshooting tips.
+
+### From source (developers, GPU)
+
+1. `python -m pip install -r host\requirements.txt` (Python 3.11+; use
+   `onnxruntime-gpu` for an NVIDIA GPU).
+2. Put `marvin_79m.onnx`, `marvin_23m.onnx` and their `.offset.npz` files from
+   [holymolyyy/marvin-onnx](https://huggingface.co/holymolyyy/marvin-onnx) in a
+   `weights` folder.
+3. Run `.\install.ps1`, then load the `extension` folder as above.
+   `.\install.ps1 -Uninstall` removes the host.
 
 ## Development
 
 ```powershell
 python -m unittest discover -s tests -p "test_*.py"
 node --test tests/
+python tools/build_release.py   # builds the Windows ZIP into dist/
 ```

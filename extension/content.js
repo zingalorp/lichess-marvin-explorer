@@ -233,9 +233,7 @@
     bar.title = 'Evaluating White / Draw / Black…';
     bar.setAttribute('role', 'img');
     bar.setAttribute('aria-label', 'White / Draw / Black not evaluated yet');
-    const part = el('span', 'draws', '…');
-    part.style.width = '100%';
-    bar.append(part);
+    bar.append(el('span'));
     return bar;
   }
   // Think time and WDL arrive after the policy. Each cell is filled in place

@@ -1,58 +1,39 @@
 MARVIN OPENING EXPLORER - WINDOWS SETUP
 
-For 64-bit Windows 10/11 on an Intel or AMD PC, using Chrome or Edge.
-The model, Python and all required libraries are included. No Python, CUDA,
-administrator access or dependency downloads are needed.
+Works on 64-bit Windows 10/11 with Google Chrome or Microsoft Edge.
+Everything it needs is included: no Python, no extra downloads, no admin rights.
 
-1. Right-click the ZIP and choose Extract All.
-   Put the extracted folder somewhere you will keep it, such as Documents.
-   Do not run Setup.cmd from inside the ZIP.
+1. Right-click the ZIP and choose "Extract All".
+   Put the folder somewhere you will keep it, such as Documents.
 
 2. Open the extracted folder and double-click Setup.cmd.
-   Wait for "Setup complete". The installer first tests the actual model,
-   then registers the local model host for your Windows account.
+   Wait for "Setup complete!" (this can take a minute).
 
-3. In Chrome, enter chrome://extensions in the address bar.
-   In Edge, enter edge://extensions instead.
-   Turn on Developer mode, click Load unpacked, and choose the "extension"
-   folder inside the extracted Marvin folder.
+3. Follow the steps Setup shows to add the extension to your browser.
+   Press Enter in the Setup window and it opens the extensions page for you.
+   In short: turn on "Developer mode", click "Load unpacked" and choose the
+   "extension" folder inside the extracted folder.
 
-4. Sign in to your own account at https://lichess.org/analysis
-   Open the opening explorer using the book button, then click the fourth
-   tab: Marvin. Reload an already-open Lichess analysis tab after setup.
-   The gear button opens Marvin's rating and time-control filters.
-   The extension's toolbar icon (pin it from the puzzle-piece menu) picks
-   the model, 79M (default) or 23M (faster), and turns on move times.
-   Hover the small clock beside a move's percentage for its time distribution.
-   Click/tap the clock to pin it; Escape or clicking elsewhere closes it.
-   Marvin also works on the analysis board of a finished game and in studies.
-   In a study, it follows the current chapter and selected variation.
+4. Open https://lichess.org/analysis, click the book button under the board
+   and choose the "Marvin" tab.
 
-Keep the entire extracted folder after installation.
-The model runs locally on your CPU. Its first analysis can take a moment;
-later requests reuse the loaded model and cached results.
-Closing the setup window after installation is fine.
+Marvin also works on finished games and in studies. The gear button sets the
+rating and time control. The extension's toolbar icon (pin it from the
+puzzle-piece menu) chooses the model and display options.
 
 IF SOMETHING DOES NOT WORK
 
-- "Host not found": run Setup.cmd again, restart Chrome/Edge and reload Lichess.
-- No Marvin tab: check that the extension is enabled, click its Reload button
-  on chrome://extensions (edge://extensions in Edge), then reload Lichess and open
-  the explorer on an Analysis board, a finished game's analysis board or a study.
-  Standard chess is supported; the extension does not run on ongoing games.
-- Setup fails: read the error in the setup window. Check that you extracted
-  the entire ZIP and that runtime/python.exe, weights/marvin_79m.onnx and
-  weights/marvin_23m.onnx exist.
-- "Folder path is too long": move the extracted folder to a shorter location,
-  such as Documents\Marvin, then run Setup.cmd again.
-- If you move the extracted folder, run Setup.cmd again and use the browser's
-  extensions page to remove the old extension and load its new folder.
-- The extension ID should be jihdgeefnflgnfnglmgcmeocddllpbpf.
+- "Host not found": run Setup.cmd again, restart the browser, reload Lichess.
+- No Marvin tab: make sure the extension is turned on, click its reload
+  button on the extensions page, then reload Lichess and open the book panel.
+- "Folder path is too long": move the folder somewhere shorter, such as
+  Documents\Marvin, then run Setup.cmd again.
+- Moved the folder? Run Setup.cmd again, remove the extension on the
+  extensions page and load the "extension" folder from its new place.
 
 TO REMOVE IT
 
-Double-click Uninstall.cmd, remove Marvin Opening Explorer from the browser's
-extensions page, then delete the extracted folder if you no longer want it.
+Double-click Uninstall.cmd, remove Marvin Opening Explorer on the browser's
+extensions page, then delete the folder.
 
-This is a separate extension. ChessLens is not required.
-Technical details and optional GPU setup are in README.md.
+The model runs on your computer. Nothing is sent anywhere.

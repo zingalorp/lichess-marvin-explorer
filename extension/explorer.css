@@ -56,7 +56,17 @@
 .me-time-stats { margin-top: 6px; }
 @media (pointer: coarse) { .me-root .me-time-trigger { width: 46px; height: 32px; margin-block: -6px; opacity: .8; } }
 
-/* WDL not evaluated yet: the row's policy is already final. */
-.me-root .bar.me-wdl-pending { opacity: .4; animation: me-wdl-pulse 1.2s ease-in-out infinite alternate; }
-@keyframes me-wdl-pulse { from { opacity: .25; } to { opacity: .5; } }
-@media (prefers-reduced-motion: reduce) { .me-root .bar.me-wdl-pending { animation: none; } }
+/* WDL not evaluated yet: an empty bar of the native shape (Lichess's span
+   rules give it the height, border and rounded ends) with a soft moving sheen,
+   like the engine's progress bar while it computes. */
+.explorer-box .me-root .bar.me-wdl-pending span {
+  width: 100%;
+  background-color: rgb(from var(--c-font) r g b / .1);
+  background-image: linear-gradient(90deg, transparent, rgb(from var(--c-font) r g b / .22), transparent);
+  background-size: 40% 100%; background-repeat: no-repeat;
+  animation: me-wdl-sweep 1.4s ease-in-out infinite;
+}
+@keyframes me-wdl-sweep { from { background-position: -70% 0; } to { background-position: 170% 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .explorer-box .me-root .bar.me-wdl-pending span { animation: none; background-image: none; }
+}

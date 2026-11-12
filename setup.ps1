@@ -1,5 +1,7 @@
 [CmdletBinding()]
-param([switch]$ValidateOnly, [switch]$Uninstall)
+# -Unattended (for testing) changes nothing outside this folder: no browser
+# registration, clipboard or browser window.
+param([switch]$ValidateOnly, [switch]$Uninstall, [switch]$Unattended)
 $ErrorActionPreference = 'Stop'
 $ProjectRoot = $PSScriptRoot
 $Installer = Join-Path $ProjectRoot 'install.ps1'
@@ -36,16 +38,51 @@ try {
     Write-Host 'Checking the bundled runtime and model. This can take a moment...'
     & $Python (Join-Path $ProjectRoot 'host/check_installation.py')
     if ($LASTEXITCODE -ne 0) { throw 'The bundled model check failed. See the error above.' }
-    & $Installer -Python $Python -Weights $Weights -Device cpu -ValidateOnly:$ValidateOnly
+    # install.ps1's own hints are replaced by the friendlier steps below.
+    & $Installer -Python $Python -Weights $Weights -Device cpu -ValidateOnly:$ValidateOnly -SkipRegistration:$Unattended 6>$null
     if ($ValidateOnly) { return }
+
+    # Last step: add the extension to the browser. Chrome only allows this by
+    # hand, so make it as short as possible: the folder path goes on the
+    # clipboard and the extensions page is opened for the user.
+    $ExtensionFolder = Join-Path $ProjectRoot 'extension'
+    $Browsers = foreach ($Candidate in @(
+        @{Name = 'Chrome'; Exe = 'chrome.exe'; Page = 'chrome://extensions/'},
+        @{Name = 'Edge'; Exe = 'msedge.exe'; Page = 'edge://extensions/'})) {
+        foreach ($Hive in @('HKCU:', 'HKLM:')) {
+            $Key = "$Hive\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\$($Candidate.Exe)"
+            $Path = (Get-ItemProperty -LiteralPath $Key -ErrorAction SilentlyContinue).'(default)'
+            if ($Path -and (Test-Path -LiteralPath $Path)) { $Candidate.Path = $Path; $Candidate; break }
+        }
+    }
+    $Browser = @($Browsers)[0]
+    $PageName = if ($Browser) { $Browser.Page } else { 'chrome://extensions (or edge://extensions)' }
+    $Copied = $false
+    if (-not $Unattended) { try { Set-Clipboard -Value $ExtensionFolder; $Copied = $true } catch {} }
+
     Write-Host ''
-    Write-Host 'Setup complete. No Python or CUDA installation is needed.'
-    Write-Host '1. Open chrome://extensions or edge://extensions.'
-    Write-Host '2. Turn on Developer mode and click Load unpacked.'
-    Write-Host "3. Select this folder: $ProjectRoot\extension"
-    Write-Host '4. Sign in to Lichess, open an analysis board or study, open the book panel and choose Marvin.'
+    Write-Host 'Setup complete!' -ForegroundColor Green
     Write-Host ''
-    Write-Host 'Keep the extracted folder. If you move it, run Setup.cmd again.'
+    Write-Host 'One last step: add the extension to your browser.' -ForegroundColor Cyan
+    Write-Host "  1. On the $PageName page, turn on 'Developer mode' (switch at the top right)."
+    Write-Host "  2. Click 'Load unpacked' (top left)."
+    if ($Copied) {
+        Write-Host '  3. In the folder window, click the address bar at the top, press Ctrl+V'
+        Write-Host "     and Enter, then click 'Select Folder'. (The folder is already copied.)"
+    } else {
+        Write-Host "  3. Choose this folder and click 'Select Folder':"
+    }
+    Write-Host "     $ExtensionFolder" -ForegroundColor Yellow
+    Write-Host '  4. Open https://lichess.org/analysis, click the book button under the board'
+    Write-Host "     and choose the 'Marvin' tab."
+    Write-Host ''
+    Write-Host 'Keep this folder where it is. If you move it, run Setup.cmd again.'
+    Write-Host ''
+    if ($Browser -and -not $Unattended) {
+        Read-Host "Press Enter to open $($Browser.Name)'s extensions page" | Out-Null
+        try { Start-Process -FilePath $Browser.Path -ArgumentList $Browser.Page }
+        catch { Write-Host "Could not open $($Browser.Name). Open $($Browser.Page) yourself." }
+    }
 } catch {
     Write-Host ''
     Write-Host $_.Exception.Message -ForegroundColor Red
